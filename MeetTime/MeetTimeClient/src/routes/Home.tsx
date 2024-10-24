@@ -1,14 +1,13 @@
-export default function Home() {
-  const handleLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/login';
-  };
+import HomeContent from "../containers/HomeContent";
+import Footer from "../layouts/Footer";
+import Navbar from "../layouts/Navbar";
 
+export default function Home() {
   return (
     <div>
-      <h1>Welcome to Meet Time</h1>
-      <button onClick={handleLogin}>
-        Login with Microsoft
-      </button>
+      <Navbar />
+      <HomeContent />
+      <Footer />
     </div>
   );
-};
+}
