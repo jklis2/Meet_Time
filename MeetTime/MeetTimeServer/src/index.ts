@@ -1,15 +1,35 @@
 import express from "express";
+import session from "express-session";
+import cors from "cors";
+import authRoutes from "./routes/auth";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello, MeetTime Server!");
-});
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET as string,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  })
+);
+
+app.use("/auth", authRoutes);
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });
